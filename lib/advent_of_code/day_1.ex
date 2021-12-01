@@ -1,10 +1,8 @@
 defmodule AdventOfCode.Day1 do
 
   def detect_measurements() do
-    file_path = Path.join(:code.priv_dir(:adventofcode2021), "day_1_input.txt")
-    {:ok, content} = File.read(file_path)
 
-    {count, _} = content
+    {count, _} = get_input()
     |> String.split("\n", trim: true)
     |> Enum.map(fn str ->
       {num, _} = Integer.parse(str)
@@ -24,6 +22,12 @@ defmodule AdventOfCode.Day1 do
     end)
 
     count
+  end
+
+  defp get_input() do
+    file_path = Path.join(:code.priv_dir(:adventofcode2021), "day_1_input.txt")
+    {:ok, content} = File.read(file_path)
+    content
   end
 
 end
