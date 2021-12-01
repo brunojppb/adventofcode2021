@@ -4,16 +4,12 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
-    strategy:
-      matrix:
-        otp: ['24.1.7']
-        elixir: ['1.12.3']
+    name: Run unit tests
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{matrix.otp}}
-          elixir-version: ${{matrix.elixir}}
+          otp-version: '24.1.7'
+          elixir-version: '1.12.3'
       - run: mix deps.get
       - run: mix test --trace
