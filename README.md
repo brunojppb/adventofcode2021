@@ -1,4 +1,4 @@
-# Advent of Code 2021
+# Advent of Code 2021 ![Unit Tests](https://github.com/brunojppb/adventofcode2021/actions/workflows/tests.yml/badge.svg)
 
 Answers for the [Advent of Code 2021 challenge](https://adventofcode.com/2021) using Elixir
 
