@@ -1,7 +1,11 @@
 defmodule AdventOfCode.Day1Test do
   use ExUnit.Case
 
-  test "detects how many measurements are larger than the previous measurement" do
-    assert AdventOfCode.Day1.detect_measurements() === 1665
+  test "detects how many measurements are larger" do
+    assert AdventOfCode.Day1.measure_check() === 1665
+  end
+
+  test "detects how many sliding window measurements are larger" do
+    assert AdventOfCode.Day1.sliding_window_check() === 1702
   end
 end
