@@ -36,7 +36,7 @@ defmodule AdventOfCode.Day3 do
     oxygen_rating * co2_rating
   end
 
-  defp life_support_check(metric_checker_fn) do
+  defp life_support_check(bit_metric_checker) do
     input = get_input("day_3_input.txt")
 
     {oxygen_rating, _} =
@@ -45,17 +45,15 @@ defmodule AdventOfCode.Day3 do
         occur = count_bit_occurencies(reduced_list)
         [count_0, count_1] = Enum.at(occur, reductions)
 
-        result =
-          reduced_list
-          |> Enum.filter(fn bit_sequence ->
-            current_bit = Enum.at(bit_sequence, reductions)
-            metric_checker_fn.(current_bit, count_0, count_1)
-          end)
-
-        case result do
+        reduced_list
+        |> Enum.filter(fn bit_sequence ->
+          current_bit = Enum.at(bit_sequence, reductions)
+          bit_metric_checker.(current_bit, count_0, count_1)
+        end)
+        |> case do
           [last_value] -> {:halt, last_value}
           [] -> {:halt, :error}
-          _ -> {:cont, {result, reductions + 1}}
+          resulting_list -> {:cont, {resulting_list, reductions + 1}}
         end
       end)
       |> List.flatten()
