@@ -73,12 +73,10 @@ defmodule AdventOfCode.Day3 do
     end
   end
 
+  # Checking for the CO2 Scrubber rating is
+  # just the complete oposite of checking Oxygen levels
   def co2_scrubber_rating_check(bit, count_0, count_1) do
-    case bit do
-      _ when count_0 == count_1 -> bit == 0
-      _ when count_0 > count_1 -> bit == 1
-      _ when count_0 < count_1 -> bit == 0
-    end
+    !oxygen_level_check(bit, count_0, count_1)
   end
 
   defp count_bit_occurencies(bit_list) do
