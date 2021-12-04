@@ -33,7 +33,6 @@ defmodule AdventOfCode.Day3 do
   def compute_life_support() do
     oxygen_rating = life_support_check(fn bit, a, b -> oxygen_level_check(bit, a, b) end)
     co2_rating = life_support_check(fn bit, a, b -> co2_scrubber_rating_check(bit, a, b) end)
-    Logger.debug("O2: #{oxygen_rating} - CO2: #{co2_rating}")
     oxygen_rating * co2_rating
   end
 
