@@ -31,8 +31,8 @@ defmodule AdventOfCode.Day3 do
   end
 
   def compute_life_support() do
-    oxygen_rating = life_support_check(fn bit, a, b -> oxygen_level_check(bit, a, b) end)
-    co2_rating = life_support_check(fn bit, a, b -> co2_scrubber_rating_check(bit, a, b) end)
+    oxygen_rating = life_support_check(&__MODULE__.oxygen_level_check/3)
+    co2_rating = life_support_check(&__MODULE__.co2_scrubber_rating_check/3)
     oxygen_rating * co2_rating
   end
 
@@ -65,7 +65,7 @@ defmodule AdventOfCode.Day3 do
     oxygen_rating
   end
 
-  defp oxygen_level_check(bit, count_0, count_1) do
+  def oxygen_level_check(bit, count_0, count_1) do
     case bit do
       _ when count_0 == count_1 -> bit == 1
       _ when count_0 > count_1 -> bit == 0
@@ -73,7 +73,7 @@ defmodule AdventOfCode.Day3 do
     end
   end
 
-  defp co2_scrubber_rating_check(bit, count_0, count_1) do
+  def co2_scrubber_rating_check(bit, count_0, count_1) do
     case bit do
       _ when count_0 == count_1 -> bit == 0
       _ when count_0 > count_1 -> bit == 1
