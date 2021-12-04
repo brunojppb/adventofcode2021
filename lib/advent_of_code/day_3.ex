@@ -7,13 +7,13 @@ defmodule AdventOfCode.Day3 do
       |> count_bit_occurencies
       # Now compute the game rate based on the occurencies of
       # '0's and '1' within each binary value
-      |> Enum.reduce([], fn [count_0, count_1], acc ->
+      |> Enum.reduce([], fn [count_zeros, count_ones], acc ->
         Enum.concat(acc, [
           {
             # The gama rate in binary
-            if(count_0 > count_1, do: 0, else: 1),
+            if(count_zeros > count_ones, do: 0, else: 1),
             # The epsilon rate in binary (Just the oposite of the gama rate)
-            if(count_0 > count_1, do: 1, else: 0)
+            if(count_zeros > count_ones, do: 1, else: 0)
           }
         ])
       end)
@@ -43,12 +43,12 @@ defmodule AdventOfCode.Day3 do
       input
       |> Enum.reduce_while({input, 0}, fn _, {reduced_list, reductions} ->
         occur = count_bit_occurencies(reduced_list)
-        [count_0, count_1] = Enum.at(occur, reductions)
+        [count_zeros, count_ones] = Enum.at(occur, reductions)
 
         reduced_list
         |> Enum.filter(fn bit_sequence ->
           current_bit = Enum.at(bit_sequence, reductions)
-          bit_metric_checker.(current_bit, count_0, count_1)
+          bit_metric_checker.(current_bit, count_zeros, count_ones)
         end)
         |> case do
           [last_value] -> {:halt, last_value}
@@ -63,18 +63,18 @@ defmodule AdventOfCode.Day3 do
     oxygen_rating
   end
 
-  def oxygen_level_check(bit, count_0, count_1) do
+  def oxygen_level_check(bit, count_zeros, count_ones) do
     case bit do
-      _ when count_0 == count_1 -> bit == 1
-      _ when count_0 > count_1 -> bit == 0
-      _ when count_0 < count_1 -> bit == 1
+      _ when count_zeros == count_ones -> bit == 1
+      _ when count_zeros > count_ones -> bit == 0
+      _ when count_zeros < count_ones -> bit == 1
     end
   end
 
   # Checking for the CO2 Scrubber rating is
   # just the complete oposite of checking Oxygen levels
-  def co2_scrubber_rating_check(bit, count_0, count_1) do
-    !oxygen_level_check(bit, count_0, count_1)
+  def co2_scrubber_rating_check(bit, count_zeros, count_ones) do
+    !oxygen_level_check(bit, count_zeros, count_ones)
   end
 
   defp count_bit_occurencies(bit_list) do
@@ -91,11 +91,11 @@ defmodule AdventOfCode.Day3 do
       bit_values
       |> Enum.with_index()
       |> Enum.map(fn {value, index} ->
-        [count_0, count_1] = Enum.at(acc, index, [0, 0])
+        [count_zeros, count_ones] = Enum.at(acc, index, [0, 0])
 
         [
-          if(value == 0, do: count_0 + 1, else: count_0),
-          if(value == 1, do: count_1 + 1, else: count_1)
+          if(value == 0, do: count_zeros + 1, else: count_zeros),
+          if(value == 1, do: count_ones + 1, else: count_ones)
         ]
       end)
     end)
