@@ -6,5 +6,4 @@ defmodule AdventOfCode.Day4Test do
     # assert AdventOfCode.Day3.compute_power_consumption() == 198
     assert AdventOfCode.Day4.get_score() == 4512
   end
-
 end

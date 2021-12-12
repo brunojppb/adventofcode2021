@@ -24,3 +24,7 @@ adventofcode2021-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Editors
+.vscode
+.idea
