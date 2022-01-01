@@ -3,6 +3,18 @@ defmodule AdventOfCode.Day4 do
 
   def get_score() do
     {input, grids} = get_input("day_4_input.txt")
+
+    input
+    |> Enum.reduce(grids, fn value, acc ->
+      acc
+      |> Enum.map(fn grid ->
+        # @TODO:
+        # - compute rows and cols with winning numbers
+        # - halt once row/col wins
+        # - compute final result
+        BingoGrid.check_value(grid, value)
+      end)
+    end)
   end
 
   # Parse input contents from file
@@ -87,7 +99,18 @@ defmodule BingoGrid do
     %__MODULE__{numbers: [], did_win: false}
   end
 
-  def is_grid_incomplete?(%BingoGrid{} = grid) do
+  def check_value(%__MODULE__{} = grid, value) do
+    %__MODULE__{
+      grid
+      | numbers:
+          grid.numbers
+          |> Enum.map(fn num ->
+            %BingoNumber{num | checked: num.checked || num.value == value}
+          end)
+    }
+  end
+
+  def is_grid_incomplete?(%__MODULE__{} = grid) do
     case length(grid.numbers) do
       0 -> true
       len when len < @grid_max_cols * @grid_max_rows -> true
@@ -95,7 +118,7 @@ defmodule BingoGrid do
     end
   end
 
-  def expand_grid(%BingoGrid{} = grid, str) do
+  def expand_grid(%__MODULE__{} = grid, str) do
     numbers =
       str
       |> String.split(" ", trim: true)
